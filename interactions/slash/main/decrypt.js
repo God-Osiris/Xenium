@@ -50,7 +50,7 @@ module.exports = {
         const cipherText = interaction.options.get("text").value;
 
         if(cipher === "dec_base64"){
-            const result = Buffer.from(cipherText, 'utf8').toString('base64');
+            const result = Buffer.from(cipherText, 'base64').toString('utf8');
             await interaction.reply({
                 content: `\`${result}\``
             })
