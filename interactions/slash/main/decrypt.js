@@ -17,27 +17,43 @@ module.exports = {
     // The data needed to register slash commands to Discord.
 
 	data: new SlashCommandBuilder()
-    .setName("encrypt")
+    .setName("decrypt")
     .setDescription(
-        "Converts regular text into ciphertext using the provided arguments."
+        "Converts ciphertext into regular text using the provided arguments."
     )
     .addStringOption((option) =>
         option
             .setName("cipher")
-            .setDescription("The cipher you want to use for encryption.")
+            .setDescription("The cipher you want to use for decryption.")
             .setRequired(true)
             .addChoices({
                 name: "Base64",
-                value: "enc_base64"
+                value: "dec_base64"
             }, {
                 name: "Morse Code",
-                value: "enc_morse"
+                value: "dec_morse"
             })
     )
     .addStringOption((option) =>
         option
             .setName("text")
-            .setDescription("The text you want to encrypt")
+            .setDescription("The text you want to decrypt")
             .setRequired(true)
     ),
+
+    async execute(interaction) {
+        /**
+		 * @type {string}
+		 * @description The "command" argument
+		 */
+		let cipher = interaction.options.getString("cipher");
+        const cipherText = interaction.options.get("text").value;
+
+        if(cipher === "dec_base64"){
+            const result = Buffer.from(cipherText, 'utf8').toString('base64');
+            await interaction.reply({
+                content: `\`${result}\``
+            })
+	    }
+    }
 };
