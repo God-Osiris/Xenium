@@ -20,6 +20,7 @@ module.exports = {
 	aliases: ["commands"],
 	usage: "[command name]",
 	cooldown: 5,
+	ownerOnly: true,
 
 	execute(message, args) {
 		const { commands } = message.client;

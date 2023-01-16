@@ -37,7 +37,7 @@ module.exports = {
 		 * @type {EmbedBuilder}
 		 * @description Help command's embed
 		 */
-		const helpEmbed = new EmbedBuilder().setColor("Random");
+		const helpEmbed = new EmbedBuilder().setColor("#36393F");
 
 		if (name) {
 			name = name.toLowerCase();

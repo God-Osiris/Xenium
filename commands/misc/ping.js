@@ -10,6 +10,7 @@
  */
 module.exports = {
 	name: "ping",
+	ownerOnly: true,
 	// Refer to typings.d.ts for available properties.
 
 	execute(message, args) {
