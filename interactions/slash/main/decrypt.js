@@ -8,6 +8,7 @@
 // Deconstructed the constants we need in this file.
 
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const xmorse = require('xmorse');
 
 /**
  * @type {import('../../../typings').SlashInteractionCommand}
@@ -54,6 +55,11 @@ module.exports = {
             await interaction.reply({
                 content: `\`${result}\``
             })
-	    }
+	    } else if(cipher === "dec_morse"){
+            const result = xmorse.decode(cipherText);
+            await interaction.reply({
+                content: `\`${result}\``
+            })
+        }
     }
 };

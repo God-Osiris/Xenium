@@ -37,7 +37,7 @@ module.exports = {
 		 * @type {EmbedBuilder}
 		 * @description Help command's embed
 		 */
-		const helpEmbed = new EmbedBuilder().setColor("#36393F");
+		const helpEmbed = new EmbedBuilder().setColor("#2f3136");
 
 		if (name) {
 			name = name.toLowerCase();
@@ -51,7 +51,7 @@ module.exports = {
 
 				if (command.data.description)
 					helpEmbed.setDescription(
-						command.data.description + "\n\n**Parameters:**"
+						command.data.description
 					);
 			} else {
 				helpEmbed
