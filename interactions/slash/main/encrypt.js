@@ -9,7 +9,7 @@
 
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 const xmorse = require('xmorse');
-
+const atbash = require('../../../algorithms/atbash.js')
 /**
  * @type {import('../../../typings').SlashInteractionCommand}
  */
@@ -33,6 +33,9 @@ module.exports = {
             }, {
                 name: "Morse Code",
                 value: "enc_morse"
+            }, {
+                name: "Atbash Cipher",
+                value: "enc_atbash"
             })
     )
     .addStringOption((option) =>
@@ -57,6 +60,11 @@ module.exports = {
             })
 	    } else if(cipher === "enc_morse"){
             const result = xmorse.encode(clearText);
+            await interaction.reply({
+                content: `\`${result}\``
+            })
+        } else if(cipher === "enc_atbash"){
+            const result = atbash.atbash(clearText);
             await interaction.reply({
                 content: `\`${result}\``
             })
