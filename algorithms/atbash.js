@@ -27,14 +27,17 @@ const atbashKey = {
     "Z": "A",
 }
 
-function atbash(text){
-    const textArray = Array.from(text.toUpperCase())
-    for(var i = 0; i < textArray.length; i++){
-        if(textArray[i] in atbashKey){
-            textArray[i] = atbashKey[textArray[i]]
-        } else {
-            continue
+module.exports = {
+    atbash: function(text){
+        const textArray = Array.from(text.toUpperCase())
+        for(var i = 0; i < textArray.length; i++){
+            if(textArray[i] in atbashKey){
+                textArray[i] = atbashKey[textArray[i]]
+            } else {
+                continue
+            }
         }
+        const result = textArray.join("")
+        return result
     }
-    console.log(textArray.join(""))
 }

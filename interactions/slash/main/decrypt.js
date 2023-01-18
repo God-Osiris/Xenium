@@ -65,7 +65,7 @@ module.exports = {
                 content: `\`${result}\``
             })
         } else if(cipher === "dec_atbash"){
-            const result = atbash.atbash(clearText);
+            const result = atbash.atbash(cipherText);
             await interaction.reply({
                 content: `\`${result}\``
             })
