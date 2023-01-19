@@ -10,6 +10,7 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 const xmorse = require('xmorse');
 const atbash = require('../../../algorithms/atbash.js')
+const str2bin = require("str2bin")
 /**
  * @type {import('../../../typings').SlashInteractionCommand}
  */
@@ -36,6 +37,9 @@ module.exports = {
             }, {
                 name: "Atbash Cipher",
                 value: "enc_atbash"
+            }, {
+                name: "Binary Conversion",
+                value: "enc_binary"
             })
     )
     .addStringOption((option) =>
@@ -65,6 +69,11 @@ module.exports = {
             })
         } else if(cipher === "enc_atbash"){
             const result = atbash.atbash(clearText);
+            await interaction.reply({
+                content: `\`${result}\``
+            })
+        } else if(cipher === "enc_binary"){
+            const result = str2bin.strToBin(clearText);
             await interaction.reply({
                 content: `\`${result}\``
             })
