@@ -74,28 +74,6 @@ client.autocompleteInteractions = new Collection();
 client.triggers = new Collection();
 
 /**********************************************************************/
-// Registration of Message-Based Legacy Commands.
-
-/**
- * @type {String[]}
- * @description All command categories aka folders.
- */
-
-const commandFolders = fs.readdirSync("./commands");
-
-// Loop through all files and store commands in commands collection.
-
-for (const folder of commandFolders) {
-	const commandFiles = fs
-		.readdirSync(`./commands/${folder}`)
-		.filter((file) => file.endsWith(".js"));
-	for (const file of commandFiles) {
-		const command = require(`./commands/${folder}/${file}`);
-		client.commands.set(command.name, command);
-	}
-}
-
-/**********************************************************************/
 // Registration of Slash-Command Interactions.
 
 /**
