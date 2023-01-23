@@ -11,6 +11,7 @@ const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 const xmorse = require('xmorse');
 const atbash = require("../../../algorithms/atbash.js")
 const str2bin = require("str2bin")
+const railFence = require("../../../algorithms/railfence.js");
 /**
  * @type {import('../../../typings').SlashInteractionCommand}
  */
@@ -40,6 +41,9 @@ module.exports = {
             }, {
                 name: "Binary Conversion",
                 value: "dec_binary"
+            }, {
+                name: "Railfence Cipher",
+                value: "dec_railf"
             })
     )
     .addStringOption((option) =>
@@ -74,6 +78,11 @@ module.exports = {
             })
         } else if(cipher === "dec_binary"){
             const result = str2bin.binToStr(cipherText);
+            await interaction.reply({
+                content: `\`${result}\``
+            })
+        } else if(cipher === "dec_railf"){
+            const result = railFence.railFence(cipherText, 3, "decrypt");
             await interaction.reply({
                 content: `\`${result}\``
             })
