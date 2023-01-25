@@ -17,6 +17,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
+const context = [];
 // Prefix regex, we will use to match in mention prefix.
 module.exports = {
 	name: "messageCreate",
@@ -42,26 +43,29 @@ module.exports = {
 			require("../messages/onMention").execute(message);
 			return;
 		}
+        const initPrompt = "A conversation between a rude, sassy discord AI called Xenium and humans:\nXenium: Hello mortal.\n"
 
-		if(message.channel.id === "1067036810066276372" && !message.author.bot){
-			console.log('w')
-			try {
+		if(message.channel.id === "1067036810066276372" || message.channel.id === "1067409236142866482"){
+            if(message.author.bot) return;
+            if(context.length >= 3){
+                context.shift();
+                context.shift();
+            } if(context.length <= 3){ context.push(`${message.author.username}: ${message.content}`)
+                let newPrompt = initPrompt + context.slice(-context.length).join("\n") + "\nXenium:";
+                try {
 				const gptResponse = await openai.createCompletion({
-					model: "davinci",
-					prompt: `Xenium is a very sassy and humorous chatbot with a bit of dark humour.\n\
-					Xenium: Hello! Do you puny mortals need some assistance today?\n\
-					${message.author.username}: ${message.content}\n\
-					Xenium:`,
-					temperature: 0.5,
-					max_tokens: 125,
+					model: "text-davinci-003",
+					prompt: newPrompt,
+					temperature: 1,
+					max_tokens: 150,
 					stop: ["Xenium:", `${message.author.username}`]
 				})
-
-				message.reply(`${gptResponse.data.choices[0].text}`)
-				return;
-			} catch(err) {
+                message.reply(`${gptResponse.data.choices[0].text}`);
+                context.push(`Xenium: ${gptResponse.data.choices[0].text}`);
+			    } catch(err) {
 				console.log(err)
-			}
+			    }
+            }
 		}
 	},
 };
