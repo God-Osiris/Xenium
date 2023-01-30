@@ -1,6 +1,6 @@
 /**
  * @file Default Bot Mention Command
- * @author Naman Vrati
+ * @author Shriyansh Aggarwal
  * @since 3.0.0
  */
 
@@ -9,7 +9,7 @@ const { prefix } = require("../config.json");
 module.exports = {
 	/**
 	 * @description Executes when the bot is pinged.
-	 * @author Naman Vrati
+	 * @author Shriyansh Aggarwal
 	 * @param {import('discord.js').Message} message The Message Object of the command.
 	 */
 

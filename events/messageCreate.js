@@ -1,21 +1,21 @@
 /**
  * @file Message Based Commands Handler
- * @author Naman Vrati
+ * @author Shriyansh Aggarwal
  * @since 1.0.0
  * @version 3.3.0
  */
 
 // Declares constants (destructured) to be used in this file.
 
-const { Collection, ChannelType } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { openai_token, openai_org } = require("../config.json");
 const { Configuration, OpenAIApi } = require("openai");
 const configuration = new Configuration({
 	organization: openai_org,
 	apiKey: openai_token
 });
-
 const openai = new OpenAIApi(configuration);
+const User = require("../schemas/user.js")
 
 const context = [];
 // Prefix regex, we will use to match in mention prefix.
@@ -24,7 +24,7 @@ module.exports = {
 
 	/**
 	 * @description Executes when a message is created and handle it.
-	 * @author Naman Vrati
+	 * @author Shriyansh Aggarwal
 	 * @param {import('discord.js').Message & { client: import('../typings').Client }} message The message which was created.
 	 */
 
@@ -43,21 +43,25 @@ module.exports = {
 			require("../messages/onMention").execute(message);
 			return;
 		}
-        const initPrompt = "A conversation between a rude, sassy discord AI called Xenium and humans:\nXenium: Hello mortal.\n"
 
-		if(message.channel.id === "1067036810066276372" || message.channel.id === "1067409236142866482"){
+		// OpenAI stuff:
+        const initPrompt = "A conversation between a rude, funny, sarcastic AI called Xenium and a person:\nXenium: Hello mortal.\n"
+        const limit = 3;
+
+		if(message.channel.id === "1067036810066276372" || message.channel.id === "1067409236142866482" || message.channel.id === "1068153515614154832"){
             if(message.author.bot) return;
-            if(context.length >= 3){
+            while(context.length >= limit){
                 context.shift();
-                context.shift();
-            } if(context.length <= 3){ context.push(`${message.author.username}: ${message.content}`)
+            }
+            if(context.length <= limit){
+                context.push(`${message.author.username}: ${message.content}`)
                 let newPrompt = initPrompt + context.slice(-context.length).join("\n") + "\nXenium:";
                 try {
 				const gptResponse = await openai.createCompletion({
 					model: "text-davinci-003",
 					prompt: newPrompt,
 					temperature: 1,
-					max_tokens: 150,
+					max_tokens: 200,
 					stop: ["Xenium:", `${message.author.username}`]
 				})
                 message.reply(`${gptResponse.data.choices[0].text}`);
@@ -66,6 +70,44 @@ module.exports = {
 				console.log(err)
 			    }
             }
+		}
+
+		if(message.author.bot) return;
+
+		// MongoDB stuff:
+
+		/**
+		 * @type {EmbedBuilder}
+		 * @description Message Embed
+		 */
+		const firstMessageEmbed = new EmbedBuilder()
+			.setColor("#00FF37")
+			.setTitle(`Achievement unlocked!`)
+			.setDescription("You just received an achievement!")
+			.addFields(
+				{
+					name: "The Journey Begins",
+          			value: `Achievement Description:\n_Send a message for the first time in Xenolith._\nMessage Content: \`${message.content}\``
+				}
+			)
+			.setImage("https://media.discordapp.net/attachments/1038439697577431141/1069637995499626617/Achievement_Unlocked.png?width=1440&height=304")
+
+		let userProfile = await User.findOne({ userId: message.author.id})
+		if (!userProfile){
+			userProfile = await new User({
+				userId: message.author.id,
+				username: message.author.username,
+				achievements: {
+					firstMessage: {
+						state: true,
+						content: message.content
+					}
+				}
+			});
+
+			await userProfile.save().catch(console.error);
+			message.author.send({embeds: [firstMessageEmbed]});
+			console.log(userProfile);
 		}
 	},
 };

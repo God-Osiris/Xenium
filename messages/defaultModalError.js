@@ -1,13 +1,13 @@
 /**
  * @file Default Error Message On Error Modal Interaction
- * @author Naman Vrati
+ * @author Shriyansh Aggarwal
  * @since 3.2.0
  */
 
 module.exports = {
 	/**
 	 * @description Executes when the modal interaction could not be fetched.
-	 * @author Naman Vrati
+	 * @author Shriyansh Aggarwal
 	 * @param {import('discord.js').ModalSubmitInteraction} interaction The Interaction Object of the command.
 	 */
 

@@ -1,6 +1,6 @@
 /**
  * @file Context Interaction Handler
- * @author Krish Garg & Naman Vrati
+ * @author Krish Garg & Shriyansh Aggarwal
  * @since 3.0.0
  * @version 3.3.0
  */
@@ -10,7 +10,7 @@ module.exports = {
 
 	/**
 	 * @description Executes when an interaction is created and handle it.
-	 * @author Naman Vrati
+	 * @author Shriyansh Aggarwal
 	 * @param {import('discord.js').ContextMenuCommandInteraction & { client: import('../typings').Client }} interaction The interaction which was created
 	 */
 

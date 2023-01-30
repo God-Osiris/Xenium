@@ -1,6 +1,6 @@
 /**
  * @file Sample autocomplete interaction
- * @author Naman Vrati
+ * @author Shriyansh Aggarwal
  * @since 3.3.0
  * @version 3.3.0
  */

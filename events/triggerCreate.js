@@ -1,6 +1,6 @@
 /**
  * @file Main trigger handler file.
- * @author Naman Vrati
+ * @author Shriyansh Aggarwal
  * @since 2.0.0
  * @version 3.3.0
  */
@@ -10,7 +10,7 @@ module.exports = {
 
 	/**
 	 * @description Executes when a message is created and handle it.
-	 * @author Naman Vrati
+	 * @author Shriyansh Aggarwal
 	 * @param {import('discord.js').Message & { client: import('../typings').Client }} message The message which was created.
 	 */
 

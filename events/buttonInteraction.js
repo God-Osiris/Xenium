@@ -1,6 +1,6 @@
 /**
  * @file Button Interaction Handler
- * @author Naman Vrati
+ * @author Shriyansh Aggarwal
  * @since 3.0.0
  * @version 3.3.1
  */
@@ -12,7 +12,7 @@ module.exports = {
 
 	/**
 	 * @description Executes when an interaction is created and handle it.
-	 * @author Naman Vrati
+	 * @author Shriyansh Aggarwal
 	 * @param {import('discord.js').ButtonInteraction & { client: import('../typings').Client }} interaction The interaction which was created
 	 */
 

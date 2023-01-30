@@ -1,12 +1,12 @@
 /**
  * @file Main File of the bot, responsible for registering events, commands, interactions etc.
- * @author Naman Vrati
+ * @author Shriyansh Aggarwal
  * @since 1.0.0
  * @version 3.3.0
  */
 
 // Declare constants which will be used throughout the bot.
-//test
+
 const fs = require("fs");
 const {
 	Client,
@@ -16,7 +16,8 @@ const {
 } = require("discord.js");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
-const { token, client_id, test_guild_id } = require("./config.json");
+const { token, client_id, test_guild_id, uri } = require("./config.json");
+const { connect } = require("mongoose");
 
 /**
  * From v13, specifying the intents is compulsory.
@@ -276,3 +277,8 @@ for (const folder of triggerFolders) {
 // Login into your client application with bot's token.
 
 client.login(token);
+
+(async () => {
+	await connect(uri).catch(console.error);
+	console.log("Connected to MongoDB!");
+})();

@@ -1,6 +1,6 @@
 /**
  * @file Ready Event File.
- * @author Naman Vrati
+ * @author Shriyansh Aggarwal
  * @since 1.0.0
  * @version 3.2.2
  */

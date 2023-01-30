@@ -1,6 +1,6 @@
 /**
  * @file Sample help command with slash command.
- * @author Naman Vrati & Thomas Fournier
+ * @author Shriyansh Aggarwal & Thomas Fournier
  * @since 3.0.0
  * @version 3.3.0
  */

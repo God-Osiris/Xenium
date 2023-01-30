@@ -1,6 +1,6 @@
 /**
  * @file Sample button interaction
- * @author Naman Vrati
+ * @author Shriyansh Aggarwal
  * @since 3.0.0
  * @version 3.2.2
  */
