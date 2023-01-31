@@ -5,6 +5,8 @@
  * @version 3.2.2
  */
 
+const User = require("../schemas/user.js")
+
 module.exports = {
 	name: "guildMemberAdd",
 
@@ -15,17 +17,14 @@ module.exports = {
 
 
 	async execute(member) {
-
         let userProfile = await User.findOne({ userId: member.id});
-
         if (!userProfile){
             userProfile = await new User({
                 userId: member.id,
-                username: member.username
+                username: member.displayName
             });
 
             await userProfile.save().catch(console.error);
-            console.log(userProfile);
         }
     }
 };

@@ -5,6 +5,8 @@
  * @version 3.2.2
  */
 
+const User = require("../schemas/user.js")
+
 module.exports = {
 	name: "guildMemberRemove",
 
@@ -16,9 +18,6 @@ module.exports = {
 
 	async execute(member) {
         await User.findOneAndRemove({ userId: member.id})
-        .then(response => {
-            console.log(response)
-        })
         .catch(err => {
             console.log(err)
         });

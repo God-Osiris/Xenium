@@ -107,7 +107,10 @@ module.exports = {
 
 			await userProfile.save().catch(console.error);
 			message.author.send({embeds: [firstMessageEmbed]});
-			console.log(userProfile);
-		}
+		} else if(userProfile.achievements.firstMessage.state === false){
+            userProfile.achievements.firstMessage.state = true;
+            userProfile.save().catch(console.error);
+            message.author.send({embeds: [firstMessageEmbed]});
+        }
 	},
 };

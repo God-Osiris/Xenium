@@ -5,6 +5,8 @@
  * @version 3.2.2
  */
 
+const User = require("../schemas/user.js")
+
 module.exports = {
 	name: "guildMemberUpdate",
 
@@ -15,27 +17,17 @@ module.exports = {
 
 
 	async execute(oldMember, newMember) {
-        let userProfile = await User.findOneAndUpdate(
-			{ 
-				userId: oldMember.id
-			},
-			{
-				userId: newMember.id,
-                username: newMember.username
-			},
-			{
-				new: true,
-				runValidators: true
-			}
-		)
-		if(!userProfile){
+        let userProfile = await User.findOne({ userId: oldMember.id})
+		if (!userProfile){
 			userProfile = await new User({
-                userId: member.id,
-                username: member.username
-            });
+				userId: newMember.id,
+				username: newMember.displayName,
+			});
 
-            await userProfile.save().catch(console.error);
-            console.log(userProfile);
+			await userProfile.save().catch(console.error);
+		} else if(userProfile.username === oldMember.displayName){
+			userProfile.username = newMember.displayName;
+			await userProfile.save().catch(console.error);
 		}
     }
 };
