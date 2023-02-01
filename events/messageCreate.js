@@ -84,33 +84,39 @@ module.exports = {
 			.setColor("#00FF37")
 			.setTitle(`Achievement unlocked!`)
 			.setDescription("You just received an achievement!")
-			.addFields(
+			.setImage("https://media.discordapp.net/attachments/1038439697577431141/1069637995499626617/Achievement_Unlocked.png?width=1440&height=304");
+
+		if(message.content.length > 800){
+			firstMessageEmbed.addFields(
 				{
 					name: "The Journey Begins",
-          			value: `Achievement Description:\n_Send a message for the first time in Xenolith._\nMessage Content: \`${message.content}\``
+					value: `Achievement Description:\n_Send a message for the first time in Xenolith._\nMessage Content: _Message length too large to display!_`
 				}
-			)
-			.setImage("https://media.discordapp.net/attachments/1038439697577431141/1069637995499626617/Achievement_Unlocked.png?width=1440&height=304")
+			);
+		} else {
+			firstMessageEmbed.addFields(
+				{
+					name: "The Journey Begins",
+					value: `Achievement Description:\n_Send a message for the first time in Xenolith._\nMessage Content: \`${message.content}\``
+				}
+			);
+		}
 
 		let userProfile = await User.findOne({ userId: message.author.id})
 		if (!userProfile){
 			userProfile = await new User({
 				userId: message.author.id,
-				username: message.author.username,
-				achievements: {
-					firstMessage: {
-						state: true,
-						content: message.content
-					}
-				}
+				username: message.author.username
 			});
 
+			userProfile.achievements[0].state.setState = true;
+
 			await userProfile.save().catch(console.error);
-			message.author.send({embeds: [firstMessageEmbed]});
-		} else if(userProfile.achievements.firstMessage.state === false){
-            userProfile.achievements.firstMessage.state = true;
+			message.author.send({embeds: [firstMessageEmbed]}).catch(console.error);
+		} else if(userProfile.achievements[0].state.setState === false){
+            userProfile.achievements[0].state.setState = true;
             userProfile.save().catch(console.error);
-            message.author.send({embeds: [firstMessageEmbed]});
+            message.author.send({embeds: [firstMessageEmbed]}).catch(console.error);
         }
 	},
 };

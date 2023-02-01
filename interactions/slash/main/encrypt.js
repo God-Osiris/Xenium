@@ -12,6 +12,8 @@ const xmorse = require('xmorse');
 const atbash = require('../../../algorithms/atbash.js')
 const railFence = require('../../../algorithms/railfence.js')
 const str2bin = require("str2bin")
+const User = require("../../../schemas/user.js");
+
 /**
  * @type {import('../../../typings').SlashInteractionCommand}
  */
@@ -86,6 +88,38 @@ module.exports = {
             await interaction.reply({
                 content: `\`${result}\``
             })
+        }
+
+        /**
+         * @type {EmbedBuilder}
+         * @description Help command's embed
+         */
+        
+        const firstEncryptEmbed = new EmbedBuilder()
+			.setColor("#00FF37")
+			.setTitle(`Achievement unlocked!`)
+			.setDescription("You just received an achievement!")
+            .addFields({
+                name: "Newborn Cryptographer",
+                value: `Achievement Description:\n_Use \`/encrypt\` for the first time._`
+            })
+			.setImage("https://media.discordapp.net/attachments/1038439697577431141/1069637995499626617/Achievement_Unlocked.png?width=1440&height=304");
+
+        let userProfile = await User.findOne({ userId: interaction.user.id})
+		if (!userProfile){
+			userProfile = await new User({
+				userId: interaction.user.id,
+				username: interaction.user.username
+			});
+
+			userProfile.achievements[1].state.setState = true;
+
+			await userProfile.save().catch(console.error);
+			await interaction.user.send({embeds: [firstEncryptEmbed]}).catch(console.error);
+		} else if(userProfile.achievements[1].state.setState === false){
+            userProfile.achievements[1].setState = true;
+            userProfile.save().catch(console.error);
+            await interaction.user.send({embeds: [firstEncryptEmbed]}).catch(console.error);
         }
     }
 };
