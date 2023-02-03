@@ -112,13 +112,17 @@ module.exports = {
 				username: interaction.user.username
 			});
 
-			userProfile.achievements[1].state.setState = true;
+			userProfile.achievements[1].state = true;
 
 			await userProfile.save().catch(console.error);
 			await interaction.user.send({embeds: [firstEncryptEmbed]}).catch(console.error);
-		} else if(userProfile.achievements[1].state.setState === false){
-            userProfile.achievements[1].setState = true;
-            userProfile.save().catch(console.error);
+		} else if(userProfile.achievements[1].state === false){
+            let query = { userId: interaction.user.id, "achievements.name": "Newborn Cryptographer" };
+            let update = { $set: { "achievements.$.state": true } };
+            let options = {};
+            User.updateOne(query, update, options, function (err, data) {
+            if (err) return handleError(err);
+            });
             await interaction.user.send({embeds: [firstEncryptEmbed]}).catch(console.error);
         }
     }
