@@ -109,14 +109,17 @@ module.exports = {
 				username: message.author.username
 			});
 
-			userProfile.achievements[0].state.setState = true;
+			userProfile.achievements[0].state = true;
 
 			await userProfile.save().catch(console.error);
 			message.author.send({embeds: [firstMessageEmbed]}).catch(console.error);
-		} else if(userProfile.achievements[0].state.setState === false){
-            userProfile.achievements[0].state.setState = true;
-            userProfile.save().catch(console.error);
-            message.author.send({embeds: [firstMessageEmbed]}).catch(console.error);
-        }
+		} else if(userProfile.achievements[0].state === false){
+			let query = { userId: message.author.id, "achievements.name": "The Journey Begins" };
+			let update = { $set: { "achievements.$.state": true } };
+			let options = {};
+
+			User.updateOne(query, update, options, function (err, data) {if (err) return handleError(err)});
+			await message.author.send({embeds: [firstMessageEmbed]}).catch(console.error);
+		}
 	},
 };

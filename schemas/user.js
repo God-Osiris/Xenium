@@ -1,26 +1,22 @@
 const { Schema, model } = require("mongoose");
 
-const stateSchema = new Schema({
-    setState: {type: Boolean, default: false}
-})
-
 const userSchema = new Schema({
     userId: String,
     username: String,
     achievements: {type: Array, default: [
         {
             name: "The Journey Begins",
-            state: stateSchema,
+            state: false,
             desc: "Send a message for the first time in Xenolith."
         },
         {
             name: "Newborn Cryptographer",
-            state: stateSchema,
+            state: false,
             desc: "Use `/encrypt` for the first time."
         },
         {
             name: "NPC Master",
-            state: stateSchema,
+            state: false,
             desc: "Get access to the Xenium AI."
         }
     ]},

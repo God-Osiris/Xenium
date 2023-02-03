@@ -33,7 +33,7 @@ module.exports = {
             const countTrueStates = obj => {
                 let count = 0;
                 for(let i = 0; i < obj.length; i++){
-                    if(obj[i].state.setState === true){
+                    if(obj[i].state === true){
                         count++;
                     }
                 }
