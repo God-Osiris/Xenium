@@ -15,9 +15,10 @@ const userSchema = new Schema({
             desc: "Use `/encrypt` for the first time."
         },
         {
-            name: "NPC Master",
+            name: "Puzzle Aficionado",
             state: false,
-            desc: "Get access to the Xenium AI."
+            desc: "Win a puzzle of the day event.",
+            count: 0
         }
     ]},
 })
